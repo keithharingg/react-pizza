@@ -1,38 +1,57 @@
 @import './variables.scss';
 @import './libs/normalize.scss';
-
 @import './components/all.scss';
+
+$font-size-base: 16px;
+$wrapper-padding: 3.125rem;
 
 body {
   background-color: $background;
 }
 
 .wrapper {
-  width: calc(100vw - 100px);
+  width: calc(100vw - 2 * #{$wrapper-padding});
   height: 100%;
   background-color: #fff;
-  margin: 50px auto;
-  border-radius: 10px;
+  margin: #{$wrapper-padding} auto;
+  border-radius: 1.25rem;
   max-width: 1400px;
 }
 
 .content {
-  padding: 40px 0;
+  padding: 2.5rem 0;
 
   &__title {
-    margin: 35px 0;
+    margin: 2rem 0;
+    font-size: 1.5rem;
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    justify-items: center;
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media screen and (max-width: 1260px) {
+      flex-direction: column;
+
+      .categories {
+        margin-bottom: 30px;
+      }
+
+      .categories ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
   }
 }
 
@@ -41,8 +60,8 @@ body {
   margin: 0 auto;
 
   &--cart {
-    max-width: 820px;
-    margin: 90px auto;
+    max-width: 51.25rem; // 820px
+    margin: 5.625rem auto; // 90px
     .content__title {
       margin: 0;
     }
@@ -59,17 +78,17 @@ body {
   .content__title {
     display: flex;
     align-items: center;
-    font-size: 32px;
+    font-size: 2rem; // 32px
 
     svg {
       position: relative;
-      top: -2px;
-      width: 30px;
-      height: 30px;
-      margin-right: 10px;
+      top: -0.125rem; // -2px
+      width: 1.875rem; // 30px
+      height: 1.875rem; // 30px
+      margin-right: 0.625rem; // 10px
       path {
         stroke: $black;
-        stroke-width: 1.9;
+        stroke-width: 0.11875rem; // 1.9
       }
     }
   }
@@ -85,24 +104,34 @@ body {
       margin-left: 7px;
       color: #b6b6b6;
       font-size: 18px;
+      transition: color $duration ease-in-out;
     }
 
-    span,
-    svg,
-    path {
-      transition: all $duration ease-in-out;
+    svg {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      path {
+        stroke: $b6b6b6;
+        stroke-width: 1.9;
+        transition: stroke $duration ease-in-out;
+      }
     }
 
     &:hover {
       svg {
         path {
-          stroke: darken($color: #b6b6b6, $amount: 50);
+          stroke: darken($b6b6b6, 50);
         }
       }
       span {
-        color: darken($color: #b6b6b6, $amount: 50);
+        color: darken($b6b6b6, 50);
       }
     }
+  }
+
+  .content__items {
+    display: block;
   }
 
   &__item {
@@ -175,34 +204,36 @@ body {
       }
     }
 
-    &-remove {
+    &__remove {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       width: 4%;
+    }
+  }
 
-      .button {
-        border-color: darken($color: $gray-line, $amount: 10);
+  .button {
+    border-color: darken($gray-line, 10);
+
+    svg {
+      transform: rotate(45deg);
+      width: 11.5px;
+      height: 11.5px;
+      position: relative;
+
+      path {
+        fill: darken($gray-line, 15);
       }
+    }
+
+    &:hover,
+    &:active {
+      border-color: darken($gray-line, 80);
+      background-color: darken($gray-line, 80);
 
       svg {
-        transform: rotate(45deg);
-
         path {
-          fill: darken($color: $gray-line, $amount: 15);
-        }
-      }
-
-      .button {
-        svg {
-          width: 11.5px;
-          height: 11.5px;
-          position: relative;
-        }
-        &:hover,
-        &:active {
-          border-color: darken($color: $gray-line, $amount: 80);
-          background-color: darken($color: $gray-line, $amount: 80);
+          fill: darken($gray-line, 80);
         }
       }
     }
@@ -236,18 +267,16 @@ body {
         align-items: center;
         justify-content: center;
         width: 210px;
-
-        border-color: darken($color: $gray-line, $amount: 10);
+        border-color: darken($gray-line, 10);
 
         span {
-          color: darken($color: $gray-line, $amount: 20);
+          color: darken($gray-line, 20);
           font-weight: 500;
-          font-weight: 600;
         }
 
         &:hover {
-          background-color: darken($color: $gray-line, $amount: 90);
-          border-color: darken($color: $gray-line, $amount: 90);
+          background-color: darken($gray-line, 90);
+          border-color: darken($gray-line, 90);
 
           span {
             color: $gray-line;
