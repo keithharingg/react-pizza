@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Categories from '../Categories';
 import Sort from '../Sort';
 import PizzaBlock from '../PizzaBlock/PizzaBlock';
 import PizzaSkeleton from '../PizzaBlock/PizzaBlockSkeleton';
 import axios from 'axios';
+import { AppContext } from '../../App';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoryId } from '../../redux/slices/filterSlice';
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+  const { categoryId, sort } = useSelector((state) => state.filterSlice);
+  const sortType = sort.sortProperty;
+  const dispatch = useDispatch();
+  const { searchValue } = useContext(AppContext);
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState({ name: 'popularity', sortProperty: 'rating' });
+  const onChangeCategory = (categoryId) => {
+    dispatch(setCategoryId(categoryId));
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -29,7 +37,7 @@ const Home = ({ searchValue }) => {
       })
       .catch((error) => {
         // Handle errors
-        alert('Error fetching data', error);
+        console.log('Error fetching data', error);
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
@@ -38,8 +46,8 @@ const Home = ({ searchValue }) => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={(i) => setCategoryId(i)} />
-        <Sort value={sortType} onChangeSort={(i) => setSortType(i)} />
+        <Categories value={categoryId} onChangeCategory={onChangeCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">All the pizzas</h2>
       <div className="content__items">
