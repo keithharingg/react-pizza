@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 
 export default function PizzaBlock({ title, price, imageUrl, sizes, types }) {
   const [activeType, setActiveType] = useState(0);
-
   const [activeSize, setActiveSize] = useState(0);
-
   const typeNames = ['thin', 'traditional'];
 
   return (
